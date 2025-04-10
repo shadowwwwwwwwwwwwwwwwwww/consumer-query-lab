@@ -24,7 +24,7 @@ const questions: Question[] = [
     options: ["Neural Networks", "Decision Trees", "Simple Linear Regression", "Random Number Generation"],
     correctAnswer: 0,
     explanation: "Neural Networks are particularly effective in credit risk assessment as they can process multiple variables simultaneously and identify complex patterns in financial data that might indicate credit risk.",
-    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=800"
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=60&w=500"
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ const questions: Question[] = [
     options: ["Real-time monitoring", "Lower costs", "Fewer staff needed", "Simpler processes"],
     correctAnswer: 0,
     explanation: "Real-time monitoring through AI allows financial institutions to detect and prevent fraudulent transactions as they happen, rather than discovering fraud after the fact, significantly reducing financial losses.",
-    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800"
+    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=60&w=500"
   },
   {
     id: 3,
@@ -47,7 +47,7 @@ const questions: Question[] = [
     options: ["Historical transaction data", "Customer demographics", "Social media data", "Market trends"],
     correctAnswer: 0,
     explanation: "Historical transaction data is essential for training AI fraud detection systems as it contains patterns of both legitimate and fraudulent transactions, allowing the AI to learn and identify suspicious activities.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800"
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=60&w=500"
   },
   {
     id: 5,
@@ -69,7 +69,7 @@ const questions: Question[] = [
     options: ["Data quality", "Processing speed", "Visual interface", "Cloud storage"],
     correctAnswer: 0,
     explanation: "Data quality is crucial for AI risk assessment models as poor or biased data can lead to incorrect risk evaluations and potentially costly financial decisions.",
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800"
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=60&w=500"
   },
   {
     id: 8,
