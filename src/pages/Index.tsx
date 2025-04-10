@@ -1,7 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
-import { FlaskConical, Skull, ChevronRight, RotateCcw, Droplets } from 'lucide-react';
+import { Beaker, Skull, ChevronRight, RotateCcw, FlaskRound as Flask, Droplets } from 'lucide-react';
 import ThreeDAnimation from '../components/ThreeDAnimation';
+import EarthBackground from '../components/EarthBackground';
+import { useIsMobile } from '../hooks/use-mobile';
 
 interface Question {
   id: number;
@@ -104,6 +106,7 @@ const Index = () => {
   const [showResults, setShowResults] = useState(false);
   const [score, setScore] = useState(0);
   const [showQuestions, setShowQuestions] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (isUserInfoSubmitted && !showAnimation && !showQuestions && !showResults) {
@@ -158,10 +161,11 @@ const Index = () => {
   // User info submission screen
   if (!isUserInfoSubmitted) {
     return (
-      <div className="min-h-screen bg-gray-900 text-green-400 flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-gray-800 rounded-xl shadow-2xl p-8 space-y-6 animate-fade-in">
+      <div className="min-h-screen bg-gray-900 text-green-400 flex items-center justify-center p-4 overflow-hidden relative">
+        <EarthBackground />
+        <div className="max-w-md w-full bg-gray-800 bg-opacity-90 backdrop-blur-sm rounded-xl shadow-2xl p-8 space-y-6 animate-fade-in z-10">
           <div className="flex items-center gap-3 mb-6">
-            <FlaskConical className="w-6 h-6 text-green-400" />
+            <Flask className="w-6 h-6 text-green-400" />
             <h1 className="text-2xl font-bold">AI Insight Vault</h1>
           </div>
           <input
@@ -207,54 +211,55 @@ const Index = () => {
   // Results screen
   if (showResults) {
     return (
-      <div className="min-h-screen bg-gray-900 text-green-400 flex items-center justify-center p-4">
-        <div className="max-w-3xl w-full bg-gray-800 rounded-xl shadow-2xl p-8 relative animate-fade-in">
+      <div className="min-h-screen bg-gray-900 text-green-400 flex items-center justify-center p-4 overflow-hidden relative">
+        <EarthBackground />
+        <div className={`${isMobile ? 'max-w-full' : 'max-w-3xl'} w-full bg-gray-800 bg-opacity-90 backdrop-blur-sm rounded-xl shadow-2xl p-4 sm:p-8 relative animate-fade-in z-10`}>
           <div className="flex items-center gap-3 mb-4">
-            <FlaskConical className="w-6 h-6 text-green-400" />
-            <h1 className="text-3xl font-bold">Quiz Results</h1>
+            <Flask className="w-6 h-6 text-green-400" />
+            <h1 className="text-xl sm:text-3xl font-bold">Quiz Results</h1>
           </div>
 
-          <div className="text-center py-8 mb-6">
-            <h2 className="text-2xl font-medium mb-2">Hello, {userName}!</h2>
-            <div className="flex items-center justify-center gap-2 text-3xl font-bold mb-4">
+          <div className="text-center py-6 sm:py-8 mb-4 sm:mb-6">
+            <h2 className="text-xl sm:text-2xl font-medium mb-2">Hello, {userName}!</h2>
+            <div className="flex items-center justify-center gap-2 text-2xl sm:text-3xl font-bold mb-4">
               <span>Your Score:</span>
-              <div className="px-4 py-2 bg-gray-700 rounded-lg">{score} / {questions.length}</div>
+              <div className="px-3 sm:px-4 py-1 sm:py-2 bg-gray-700 rounded-lg">{score} / {questions.length}</div>
             </div>
-            <div className="inline-block px-4 py-2 rounded-full border-2 border-green-500 mt-2">
+            <div className="inline-block px-3 sm:px-4 py-1 sm:py-2 rounded-full border-2 border-green-500 mt-2">
               {score >= 7 ? (
-                <span className="flex items-center gap-2 text-lg font-medium text-green-400">
-                  <FlaskConical className="w-5 h-5" />Expert Analyst
+                <span className="flex items-center gap-2 text-base sm:text-lg font-medium text-green-400">
+                  <Flask className="w-4 h-4 sm:w-5 sm:h-5" />Expert Analyst
                 </span>
               ) : score >= 4 ? (
-                <span className="flex items-center gap-2 text-lg font-medium text-yellow-400">
-                  <Droplets className="w-5 h-5" />Informed Observer
+                <span className="flex items-center gap-2 text-base sm:text-lg font-medium text-yellow-400">
+                  <Droplets className="w-4 h-4 sm:w-5 sm:h-5" />Informed Observer
                 </span>
               ) : (
-                <span className="flex items-center gap-2 text-lg font-medium text-red-400">
-                  <Skull className="w-5 h-5" />Needs Practice
+                <span className="flex items-center gap-2 text-base sm:text-lg font-medium text-red-400">
+                  <Skull className="w-4 h-4 sm:w-5 sm:h-5" />Needs Practice
                 </span>
               )}
             </div>
           </div>
 
-          <div className="bg-gray-700 rounded-xl p-6 mb-8">
-            <h3 className="text-xl font-bold mb-4 border-b border-gray-600 pb-2">Review Your Answers</h3>
+          <div className="bg-gray-700 rounded-xl p-3 sm:p-6 mb-6 sm:mb-8">
+            <h3 className="text-lg sm:text-xl font-bold mb-4 border-b border-gray-600 pb-2">Review Your Answers</h3>
             
             {questions.map((q, index) => {
               const selectedAnswer = getSelectedAnswer(q.id);
               const isCorrect = selectedAnswer === q.correctAnswer;
               
               return (
-                <div key={q.id} className={`mb-6 p-4 rounded-lg ${isCorrect ? 'bg-green-900/20' : 'bg-red-900/20'}`}>
-                  <p className="font-medium mb-2">
+                <div key={q.id} className={`mb-5 p-2 sm:p-4 rounded-lg ${isCorrect ? 'bg-green-900/20' : 'bg-red-900/20'}`}>
+                  <p className="font-medium mb-2 text-sm sm:text-base">
                     {index + 1}. {q.question}
                   </p>
                   
-                  <div className="flex flex-col gap-2 mt-3 mb-3">
+                  <div className="flex flex-col gap-2 mt-2 sm:mt-3 mb-2 sm:mb-3">
                     {q.options.map((option, i) => (
                       <div
                         key={i}
-                        className={`px-3 py-2 rounded-md text-sm flex items-center ${
+                        className={`px-2 sm:px-3 py-1 sm:py-2 rounded-md text-xs sm:text-sm flex items-center ${
                           i === q.correctAnswer
                             ? 'bg-green-700/30 border border-green-500'
                             : i === selectedAnswer
@@ -264,15 +269,15 @@ const Index = () => {
                       >
                         <div className="mr-2">
                           {i === q.correctAnswer ? (
-                            <div className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center">
+                            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-green-500 flex items-center justify-center text-xs">
                               ✓
                             </div>
                           ) : i === selectedAnswer ? (
-                            <div className="w-4 h-4 rounded-full bg-red-500 flex items-center justify-center">
+                            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-red-500 flex items-center justify-center text-xs">
                               ✗
                             </div>
                           ) : (
-                            <div className="w-4 h-4 rounded-full border border-gray-500"></div>
+                            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full border border-gray-500"></div>
                           )}
                         </div>
                         {option}
@@ -280,7 +285,7 @@ const Index = () => {
                     ))}
                   </div>
                   
-                  <div className="text-sm text-gray-300 mt-2 p-3 bg-gray-800 rounded-md">
+                  <div className="text-xs sm:text-sm text-gray-300 mt-2 p-2 sm:p-3 bg-gray-800 rounded-md">
                     <span className="font-medium text-green-400">Explanation:</span> {q.explanation}
                   </div>
                 </div>
@@ -290,9 +295,9 @@ const Index = () => {
           
           <button
             onClick={resetQuiz}
-            className="flex items-center justify-center gap-2 mx-auto bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg transition-colors"
+            className="flex items-center justify-center gap-2 mx-auto bg-gray-700 hover:bg-gray-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors text-sm sm:text-base"
           >
-            <RotateCcw className="w-5 h-5" /> Retake Quiz
+            <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5" /> Retake Quiz
           </button>
         </div>
       </div>
@@ -307,23 +312,24 @@ const Index = () => {
     const hasAnsweredAll = answers.length === questions.length;
 
     return (
-      <div className="min-h-screen bg-gray-900 text-green-400 flex items-center justify-center p-4">
-        <div className="max-w-3xl w-full bg-gray-800 rounded-xl shadow-2xl p-8 relative animate-fade-in">
-          <div className="flex items-center gap-3 mb-2">
-            <FlaskConical className="w-5 h-5 text-green-400" />
-            <h1 className="text-2xl font-bold">Study of Consumer Behavior</h1>
+      <div className="min-h-screen bg-gray-900 text-green-400 flex items-center justify-center p-4 overflow-hidden relative">
+        <EarthBackground />
+        <div className={`${isMobile ? 'max-w-full' : 'max-w-3xl'} w-full bg-gray-800 bg-opacity-90 backdrop-blur-sm rounded-xl shadow-2xl p-4 sm:p-8 relative animate-fade-in z-10`}>
+          <div className="flex items-center gap-2 sm:gap-3 mb-2">
+            <Flask className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
+            <h1 className="text-lg sm:text-2xl font-bold">Study of Consumer Behavior</h1>
           </div>
-          <p className="text-sm text-gray-400 mb-6 ml-8">Understanding consumer perspectives and decision-making patterns in modern markets</p>
+          <p className="text-xs sm:text-sm text-gray-400 mb-4 sm:mb-6 ml-6 sm:ml-8">Understanding consumer perspectives and decision-making patterns in modern markets</p>
 
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-4 sm:mb-6">
             <div className="flex items-center gap-2">
-              <span className="bg-gray-700 text-sm px-3 py-1 rounded-full">
+              <span className="bg-gray-700 text-xs sm:text-sm px-2 sm:px-3 py-1 rounded-full">
                 Question {currentQuestion + 1}/{questions.length}
               </span>
             </div>
             
             <div className="flex items-center gap-2">
-              <div className="bg-gray-700 h-1.5 rounded-full w-32">
+              <div className="bg-gray-700 h-1.5 rounded-full w-20 sm:w-32">
                 <div
                   className="bg-green-500 h-full rounded-full"
                   style={{
@@ -334,11 +340,11 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="bg-gray-700 rounded-xl p-6 mb-6">
-            <h2 className="text-xl font-bold mb-4">{question.question}</h2>
+          <div className="bg-gray-700 rounded-xl p-3 sm:p-6 mb-4 sm:mb-6">
+            <h2 className="text-base sm:text-xl font-bold mb-3 sm:mb-4">{question.question}</h2>
 
             {question.image && (
-              <div className="w-full h-48 mb-6 overflow-hidden rounded-lg">
+              <div className="w-full h-32 sm:h-48 mb-3 sm:mb-6 overflow-hidden rounded-lg">
                 <img
                   src={question.image}
                   alt="Question illustration"
@@ -347,19 +353,19 @@ const Index = () => {
               </div>
             )}
 
-            <div className="flex flex-col gap-3 mt-4">
+            <div className="flex flex-col gap-2 sm:gap-3 mt-3 sm:mt-4">
               {question.options.map((option, index) => (
                 <button
                   key={index}
                   onClick={() => handleAnswerSelect(index)}
-                  className={`flex items-center gap-3 p-4 rounded-lg text-left transition-colors ${
+                  className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-4 rounded-lg text-left transition-colors text-xs sm:text-sm ${
                     getSelectedAnswer(question.id) === index
                       ? 'bg-green-700/50 border border-green-500'
-                      : 'bg-gray-800 hover:bg-gray-700 border border-gray-600'
+                      : 'bg-gray-800 hover:bg-gray-750 border border-gray-600'
                   }`}
                 >
                   <div
-                    className={`w-6 h-6 rounded-full flex items-center justify-center border ${
+                    className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center border ${
                       getSelectedAnswer(question.id) === index
                         ? 'border-green-500 bg-green-500 text-gray-900'
                         : 'border-gray-500'
@@ -377,7 +383,7 @@ const Index = () => {
             <button
               onClick={() => setCurrentQuestion(Math.max(0, currentQuestion - 1))}
               disabled={currentQuestion === 0}
-              className={`px-4 py-2 rounded-lg flex items-center gap-2 ${
+              className={`px-2 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm rounded-lg flex items-center gap-1 sm:gap-2 ${
                 currentQuestion === 0
                   ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
                   : 'bg-gray-700 hover:bg-gray-600 text-white'
@@ -389,9 +395,9 @@ const Index = () => {
             {isLastQuestion && hasAnsweredCurrent ? (
               <button
                 onClick={handleSubmit}
-                className="bg-green-500 text-gray-900 px-6 py-2 rounded-lg hover:bg-green-400 transition-colors flex items-center gap-2"
+                className="bg-green-500 text-gray-900 px-3 sm:px-6 py-1 sm:py-2 text-xs sm:text-sm rounded-lg hover:bg-green-400 transition-colors flex items-center gap-1 sm:gap-2"
               >
-                Finish Quiz <ChevronRight className="w-4 h-4" />
+                Finish Quiz <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
               </button>
             ) : (
               <button
@@ -401,13 +407,13 @@ const Index = () => {
                   }
                 }}
                 disabled={!hasAnsweredCurrent}
-                className={`px-6 py-2 rounded-lg flex items-center gap-2 ${
+                className={`px-3 sm:px-6 py-1 sm:py-2 text-xs sm:text-sm rounded-lg flex items-center gap-1 sm:gap-2 ${
                   !hasAnsweredCurrent
                     ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
                     : 'bg-green-500 text-gray-900 hover:bg-green-400'
                 }`}
               >
-                Next <ChevronRight className="w-4 h-4" />
+                Next <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
               </button>
             )}
           </div>
@@ -416,7 +422,7 @@ const Index = () => {
             <div className="mt-4 text-center">
               <button
                 onClick={handleSubmit}
-                className="text-green-400 hover:text-green-300 underline text-sm"
+                className="text-green-400 hover:text-green-300 underline text-xs sm:text-sm"
               >
                 Skip to results
               </button>
